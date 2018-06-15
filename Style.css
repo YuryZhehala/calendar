@@ -1,0 +1,291 @@
+* {
+  font-family: 'Courier New', serif;
+  font-size: 18px;
+}
+
+#page {
+  width: 1000px;
+  margin: auto;
+}
+
+/*Ссылки*/
+
+a {
+  font-weight: 400;
+  color: #324577;
+}
+
+a:hover {
+  color: Red;
+}
+
+.pass {
+  text-align: center;
+}
+
+.pass a {
+  text-decoration: none;
+  font-size: 1em;
+  position: relative;
+  transition: all 0.6s;
+}
+
+.pass a:before {
+  content: '';
+  width: 0;
+  height: 0.1em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #324577;
+  transition: all 0.3s;
+}
+
+.pass a:hover:before {
+  width: 100%;
+  left: 0;
+  background: Red;
+}
+
+#select {
+  position: absolute;
+  left: 600px;
+  top: 50px;
+  margin: 0px 50px 0px 50px;
+  float: right;
+  width: 400px;
+}
+
+#chooseYear,
+#chooseMonth {
+  width: 180px;
+}
+
+.button {
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  display: inline-block;
+  margin: 0 auto;
+
+  -webkit-border-radius: 2px;
+
+  -webkit-box-shadow: 0px 3px rgba(128, 128, 128, 1),
+    /* gradient effects */ 0px 4px rgba(118, 118, 118, 1),
+    0px 5px rgba(108, 108, 108, 1), 0px 6px rgba(98, 98, 98, 1),
+    0px 7px rgba(88, 88, 88, 1), 0px 8px rgba(78, 78, 78, 1),
+    0px 14px 6px -1px rgba(128, 128, 128, 1);
+  /* shadow */
+  -webkit-transition: -webkit-box-shadow 0.1s ease-in-out;
+}
+
+.button span {
+  background-color: #e8e8e8;
+
+  background-image: /* gloss gradient */ -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(50%, rgba(255, 255, 255, 0)),
+      color-stop(50%, rgba(255, 255, 255, 0.3)),
+      color-stop(100%, rgba(255, 255, 255, 0.2))
+    ),
+    /* dark outside gradient */ -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(210, 210, 210, 0.3)), color-stop(20%, rgba(210, 210, 210, 0)), color-stop(80%, rgba(210, 210, 210, 0)), color-stop(100%, rgba(210, 210, 210, 0.3))),
+    /* light inner gradient */ -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(20%, rgba(255, 255, 255, 0.5)), color-stop(80%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(255, 255, 255, 0))),
+    /* diagonal line pattern */ -webkit-gradient(linear, 0% 100%, 100% 0%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(40%, rgba(255, 255, 255, 0)), color-stop(40%, #d2d2d1), color-stop(60%, #d2d2d1), color-stop(60%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(255, 255, 255, 0)));
+
+  -webkit-box-shadow: 0px -1px #fff, /* top highlight */ 0px 1px 1px #ffffff;
+  /* bottom edge */
+  -webkit-background-size: 100%, 100%, 100%, 4px 4px;
+
+  -webkit-border-radius: 2px;
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+
+  display: inline-block;
+  padding: 10px 40px 10px 40px;
+
+  color: #3a474d;
+  text-transform: uppercase;
+  font-family: 'TradeGothicLTStd-BdCn20', 'PT Sans Narrow';
+  font-weight: 700;
+  font-size: 16px;
+
+  text-shadow: 0px 1px #fff, 0px -1px #262f33;
+}
+
+.button span:hover {
+  color: Red;
+  text-shadow: 0px -1px Red;
+  cursor: pointer;
+}
+
+.button:active {
+  -webkit-box-shadow: 0px 3px rgba(128, 128, 128, 1),
+    0px 4px rgba(118, 118, 118, 1), 0px 5px rgba(108, 108, 108, 1),
+    0px 6px rgba(98, 98, 98, 1), 0px 7px rgba(88, 88, 88, 1),
+    0px 8px rgba(78, 78, 78, 1), 0px 10px 2px 0px rgba(128, 128, 128, 0.6);
+  /* shadow */
+}
+
+.button:active span {
+  -webkit-transform: translate(0, 5px);
+  /* depth of button press */
+}
+
+.button span:after {
+  content: '>';
+  display: block;
+  width: 10px;
+  height: 10px;
+
+  position: absolute;
+  right: 14px;
+  top: 12px;
+
+  font-family: 'Cabin';
+  font-weight: 700;
+  color: Red;
+  text-shadow: 0px 1px #fff, 0px -1px #97a63a;
+  font-size: 26px;
+}
+
+#options {
+  width: auto;
+}
+
+button {
+  letter-spacing: 2px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  border: 3px solid;
+  padding: 8px 20px;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+  border-color: silver;
+}
+
+button:hover {
+  color: #fff;
+  background: #324577;
+  border-color: #fff;
+  border-radius: 0;
+}
+
+/*Календарь*/
+
+th {
+  background-color: silver;
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 15px;
+  font-family: 'Courier New', serif;
+  font-weight: bold;
+}
+
+p {
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tbody td {
+  border: 1px solid black;
+  padding: 5px;
+  vertical-align: top;
+  width: 60px;
+  height: 50px;
+}
+
+tbody td:hover {
+  background-color: #324577;
+  color: white;
+  cursor: pointer;
+}
+
+tbody td:active {
+  box-shadow: inset 2px 2px 2px black;
+  background-color: rgb(0, 0, 247);
+}
+
+.rightButton {
+  text-align: center;
+  padding: 0px;
+}
+
+.leftButton {
+  text-align: center;
+  padding: 0px;
+}
+
+.del {
+  float: right;
+}
+
+#code {
+  float: left;
+}
+
+div#content > h1 {
+  text-align: center;
+}
+
+div#content > div#calendar {
+  position: absolute;
+  left: 430px;
+}
+
+/*Стили фотографии*/
+
+.image {
+  width: 300px;
+  margin: 50px auto 0;
+  position: relative;
+  border: 6px solid white;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.image img {
+  max-width: 100%;
+  display: block;
+}
+
+.image:before,
+.image:after {
+  content: '';
+  width: 300px;
+  height: 281px;
+  position: absolute;
+  z-index: -1;
+  border: 6px solid white;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.image:before {
+  background: #f5cec6;
+  top: 0px;
+  left: -10px;
+  transform: rotate(-5deg);
+}
+
+.image:after {
+  background: #dcb8b2;
+  top: 5px;
+  left: 0px;
+  transform: rotate(4deg);
+}

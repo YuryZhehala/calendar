@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calendar SPA</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="page">
+    <div id="links" class="pass">
+      <a href="#calendar">Calendar</a>
+      <a href="#create">Create</a>
+      <a href="#author">About author</a>
+    </div>
+
+    <div id="content"></div>
+
+    <div id="createContent" class="hidden">
+      <div id="options">
+        <fieldset>
+          <label>
+            <input type="checkbox" id="changeMonth" checked>Allow change month</label>
+          <br>
+          <label>
+            <input type="checkbox" id="addTasks" checked>Allow add tasks</label>
+          <br>
+          <label>
+            <input type="checkbox" id="removeTasks" checked>Allow remove tasks</label>
+          <br>
+          <label>
+            <input type="checkbox" id="showMonth" checked>Show month / year</label>
+          <div id="select">
+            <select size="1" id="chooseYear">
+              <option selected disabled>Выберите год</option>
+              <option>2018</option>
+              <option>2019</option>
+              <option>2020</option>
+              <option>2021</option>
+            </select>
+            <select size="1" id="chooseMonth">
+              <option selected disabled>Выберите месяц</option>
+              <option value="0">Январь</option>
+              <option value="1">Февраль</option>
+              <option value="2">Март</option>
+              <option value="3">Апрель</option>
+              <option value="4">Май</option>
+              <option value="5">Июнь</option>
+              <option value="6">Июль</option>
+              <option value="7">Август</option>
+              <option value="8">Сентябрь</option>
+              <option value="9">Октябрь</option>
+              <option value="10">Ноябрь</option>
+              <option value="11">Декабрь</option>
+            </select>
+            <a class="button" id="reset">
+              <span>ВЫБРАТЬ</span>
+            </a>
+          </div>
+        </fieldset>
+      </div>
+      <div>
+        <div>
+          <pre id="code"></pre>
+        </div>
+        <div id="create"></div>
+      </div>
+    </div>
+
+    <div id="aboutAuthor" class="hidden">
+      <h1>About author</h1>
+      <div class="image">
+        <img src="https://avatars0.githubusercontent.com/u/37936408?s=400&u=9d45257ada28e85acaafebe5ee32b0f69d84a2b2&v=4">
+      </div>
+      <p class="pass">
+        <br>My name is Yury.
+        <br>My email -
+        <a href="mailto:yury.zhehala@gmail.com">yury.zhehala@gmail.com</a>
+        <br>My github account -
+        <a href="https://github.com/YuryZhehala">https://github.com/YuryZhehala</a>
+      </p>
+    </div>
+
+  </div>
+  <script>
+    'use strict';
+    window.onhashchange = function () {
+      showPage(window.location.hash);
+    }
+    showPage(window.location.hash);
+
+    // выбор страницы в зависимости от хэша
+    function showPage(hash) {
+      switch (hash) {
+        case '#calendar':
+          showCalendar();
+          break;
+        case '#create':
+          showCreate();
+          break;
+        case '#author':
+          showAuthor();
+          break;
+        default:
+          showCalendar();
+      }
+    }
+
+    // отображает только календарь
+    function showCalendar() {
+
+      var content = document.getElementById('content');
+      content.innerHTML = '';
+      var calendar = document.createElement('div');
+      calendar.id = 'calendar';
+      content.appendChild(calendar);
+      new Calendar({
+        el: '#calendar',
+        changeMonth: true,
+        addTasks: true,
+        removeTasks: true,
+        showMonth: true,
+      });
+    }
+
+    // создаёт свой календарь
+    function showCreate() {
+      var content = document.getElementById('content');
+
+      var createContent = document.getElementById('createContent');
+      // копирование подготовленной разметки страницы создания
+      content.innerHTML = createContent.innerHTML;
+
+      // объект с параметрами для создания календаря
+      var options = {
+        el: '#create',
+        changeMonth: true,
+        addTasks: true,
+        removeTasks: true,
+        showMonth: true,
+      };
+      new Calendar(options);
+      // обработчики onchange для всех чекбоксов
+      content.querySelector('#changeMonth').onchange = function (e) {
+        options.changeMonth = e.target.checked;
+        new Calendar(options);
+        displayCode();
+      };
+      content.querySelector('#addTasks').onchange = function (e) {
+        options.addTasks = e.target.checked;
+        new Calendar(options);
+        displayCode();
+      }
+      content.querySelector('#removeTasks').onchange = function (e) {
+        options.removeTasks = e.target.checked;
+        new Calendar(options);
+        displayCode();
+      }
+      content.querySelector('#showMonth').onchange = function (e) {
+        options.showMonth = e.target.checked;
+        new Calendar(options);
+        displayCode();
+      }
+
+      displayCode();
+      function displayCode() {
+        var code = document.getElementById('code');
+        var id = 'calendar';
+        code.innerText = 'var id = "calendar";\n' +
+          'document.write("<div id="' + id + '"></div>");\n' +
+          'new Calendar({\n' +
+          '  el: "' + options.el + '",\n' +
+          '  changeMonth: ' + options.changeMonth + ',\n' +
+          '  addTasks: ' + options.addTasks + ',\n' +
+          '  removeTasks: ' + options.removeTasks + ',\n' +
+          '  showMonth: ' + options.showMonth + ',\n' +
+          '});'
+      }
+    }
+
+    // показывает страницу об авторе
+    function showAuthor() {
+      var content = document.getElementById('content');
+      var aboutAuthor = document.getElementById('aboutAuthor');
+      content.innerHTML = aboutAuthor.innerHTML;
+    }
+
+    /**
+     * Конструктор календаря
+     * @param {object} options объект настроек календаря
+     */
+    function Calendar(options) {
+
+      var elem = document.querySelector(options.el);
+      // найдем элемент
+      // строка с кнопками и месяцем / годом
+      var table = '<table><thead>' +
+        '<tr>' +
+        '<td class="leftButton"><button class="left">&#9668;</button></td>' +
+        '<td class="month" colspan="3"></td>' +
+        '<td class="year" colspan="2"></td>' +
+        '<td class="rightButton"><button class="right">&#9658;</button></td>' +
+        '</tr>';
+      // строка дней недели 
+      table += '<tr>' +
+        '<th>ПН</th>' +
+        '<th>ВТ</th>' +
+        '<th>СР</th>' +
+        '<th>ЧТ</th>' +
+        '<th>ПТ</th>' +
+        '<th>СБ</th>' +
+        '<th>ВС</th></tr></thead>';
+      // место для дней месяца
+      table += '<tbody></tbody>';
+      // создание пустой таблицы
+
+
+      elem.innerHTML = table + '</table>';
+
+      var tbody = elem.querySelector('tbody');
+
+      var date = new Date();
+      const mon = date.getMonth();
+
+      date.setDate(1);
+
+      // место месяца в td
+      var month = elem.querySelector('td.month');
+      // место года в td
+      var year = elem.querySelector('td.year');
+      // массив отображаемых названий месяцев
+      var monthes = [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь"
+      ];
+
+      // загрузка созданных ранее заметок из localStorage
+      var storage;
+      var storageJSON = localStorage.getItem('calendar' + options.el);
+      if (storageJSON) {
+        storage = JSON.parse(storageJSON);
+      } else {
+        storage = {};
+      }
+
+      // отображаем дни текущего выбранного месяца
+      drawDays();
+
+
+      function drawDays() {
+        // скопируем текущую отображаемую дату (обозначает месяц)
+        const d1 = new Date(date);
+
+        var d = new Date(date);
+
+        // сбрасываем дату на первое число месяца
+
+
+        if (options.showMonth) {
+          // отображаем текущий месяц и год
+          month.innerText = monthes[date.getMonth()];
+          year.innerText = date.getFullYear();
+        }
+        // чтобы воскресенью соотвествовал 7, а не 0
+        function getDay(date) {
+          let day = date.getDay();
+          if (day === 0) day = 7;
+          return day;
+        }
+
+        var table = '';
+        let from = d1.setDate(d1.getDate() - (getDay(date) - 1));
+        var d0 = d1.getDate();
+        for (let i = 1; i < getDay(d); i++) {
+          table += '<td style="color: silver">' + d0 + '</td>';
+          d0++;
+        }
+        while (d.getMonth() == date.getMonth()) {
+          if (getDay(d) < 6) {
+            table += '<td day="' + d.getDate() + '">' + d.getDate() + '</td>';
+
+          } else {
+            table += '<td style="color: red" day="' + d.getDate() + '">' + d.getDate() + '</td>';
+          }
+          if (getDay(d) === 7) {
+            table += '</tr><tr>';
+          }
+          d.setDate(d.getDate() + 1);
+        }
+        if (getDay(d) !== 1) {
+          while (d.getDay() != 1) {
+            table += '<td style="color: silver">' + d.getDate() + '</td>';
+            d.setDate(d.getDate() + 1);
+          }
+        }
+        if (d.getDay() != 1) {
+          table += '</tr>';
+        }
+
+        // отобразим таблицу дней
+        tbody.innerHTML = table;
+        // отображение сохраненных ранее заметок в таблице
+        for (var time in storage) {
+          // создание даты (день) по миллисекундам
+          var today = new Date(+time);
+          // если день в нашем отображаемом месяце
+          if (today.getFullYear() == date.getFullYear() && today.getMonth() == date.getMonth()) {
+            // заметки дня надо отобразить в нужный td
+            var td = tbody.querySelector('td[day="' + today.getDate() + '"]');
+            var notes = td.querySelector('div');
+            if (!notes) {
+              notes = document.createElement('div');
+              td.appendChild(notes);
+            }
+            // получим список заметок текущего дня
+            var notesList = storage[time];
+            for (var i = 0; i < notesList.length; i++) {
+              var p = createNote(notesList[i], time, i);
+              notes.appendChild(p);
+            }
+          }
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var choosenYear = document.getElementById('chooseYear'); //в переменную choosenYear заносим DOM-объект элемент select, который отбираес при помощи id 
+        var choosenMonth = document.getElementById('chooseMonth');
+        choosenYear.addEventListener('change', function () { // т.к. choosenYear - элемент DOM, то у него есть метод addEventListener , первый параметр - отслеживаемое событие, второй - функция, которая выполнится при срабатывании события 
+          inputYearToChange(this); // this - контекст вызова. Функция вызывается в контексте объекта choosenYear - нашего select-а , значит в this хранится автоматом именно он 
+          console.log(choosenYear);
+        });
+        choosenMonth.addEventListener('change', function () { // т.к. choosenYear - элемент DOM, то у него есть метод addEventListener , первый параметр - отслеживаемое событие, второй - функция, которая выполнится при срабатывании события 
+          inputMonthToChange(this); // this - контекст вызова. Функция вызывается в контексте объекта choosenYear - нашего select-а , значит в this хранится автоматом именно он 
+        });
+        var reset = document.getElementById('reset');
+        reset.addEventListener('click', function () {
+          location.reload();
+        });
+      });
+
+      function inputYearToChange(inputYear) {
+        // inputYear - приходит передаваемый объект select, у него есть свойство value в которое попатает текущее выбранное значение 
+        var newYear = inputYear.value;
+        sessionStorage.setItem('newYear', inputYear.value);
+      }
+      var newYear = sessionStorage.getItem('newYear');
+      var date = new Date(newYear, 0);
+      drawDays();
+
+      function inputMonthToChange(inputMonth) {
+        // inputMonth - приходит передаваемый объект select, у него есть свойство value в которое попатает текущее выбранное значение 
+        var newMonth = inputMonth.value;
+        sessionStorage.setItem('newMonth', inputMonth.value);
+
+      }
+      var newMonth = sessionStorage.getItem('newMonth');
+      var date = new Date(newYear, newMonth);
+      drawDays();
+
+      if (options.changeMonth) {
+        // по клику на левую кнопку
+        elem.querySelector('button.left').onclick = function () {
+          // переключаемся на предыдущий месяц
+          date.setMonth(date.getMonth() - 1);
+          // отображаем календарь для измененного месяца 
+          drawDays();
+        };
+        // по клику на правую кнопку
+        elem.querySelector('button.right').onclick = function () {
+          date.setMonth(date.getMonth() + 1);
+          drawDays();
+        };
+      } else {
+        // иначе спрячем кнопки
+        elem.querySelector('button.left').style.display = 'none';
+        elem.querySelector('button.right').style.display = 'none';
+      }
+
+      // обрабатываем двойное нажатие мышью по всему календарю
+      tbody.addEventListener('dblclick', function (e) {
+        if (!options.addTasks) {
+          return;
+        }
+        // получаем текст значения из ячейки
+        var day = +e.target.getAttribute("day");
+        // проверяем, что ячейка содержит числовое значение
+        if (day) {
+          var notes = e.target.querySelector('div');
+          if (!notes) {
+            notes = document.createElement('div');
+            e.target.appendChild(notes);
+          }
+
+          var noteUser = prompt('Добавить событие');
+          if (!noteUser) {
+            return;
+          }
+          // составим дату текущего дня
+          var today = new Date(date.getFullYear(), date.getMonth(), day);
+
+          // находим или создаем список заметок в этот день
+          var notesList = storage[today.getTime()];
+          if (!notesList) {
+            notesList = [];
+            storage[today.getTime()] = notesList;
+          }
+          // добавляем заметку в конец списка
+          notesList.push(noteUser);
+          var p = createNote(noteUser, today.getTime(), notesList.length - 1);
+          notes.appendChild(p);
+          localStorage.setItem('calendar' + options.el, JSON.stringify(storage));
+        }
+      });
+
+      function createNote(text, time, index) {
+        var p = document.createElement('p');
+        p.innerText = text;
+        if (options.removeTasks) {
+          var a = document.createElement('a');
+          a.innerText = 'x';
+          a.href = '#';
+          a.className = 'del';
+          a.onclick = function () {
+            if (confirm('Удалить заметку?')) {
+              p.parentNode.removeChild(p);
+              // нашли все заметки за нужный день
+              var notesListDel = storage[time];
+              // удаляем нужную заметку
+              notesListDel.splice(index, 1);
+              // обновили localStorage
+              localStorage.setItem('calendar' + options.el, JSON.stringify(storage));
+            }
+            return false;
+          };
+          p.appendChild(a);
+        }
+        return p;
+      }
+    }
+  </script>
+</body>
+
+</html>
