@@ -335,20 +335,18 @@
         }
       }
 
-      document.addEventListener('DOMContentLoaded', function () {
-        var choosenYear = document.getElementById('chooseYear'); //в переменную choosenYear заносим DOM-объект элемент select, который отбираес при помощи id 
-        var choosenMonth = document.getElementById('chooseMonth');
-        choosenYear.addEventListener('change', function () { // т.к. choosenYear - элемент DOM, то у него есть метод addEventListener , первый параметр - отслеживаемое событие, второй - функция, которая выполнится при срабатывании события 
-          inputYearToChange(this); // this - контекст вызова. Функция вызывается в контексте объекта choosenYear - нашего select-а , значит в this хранится автоматом именно он 
-          console.log(choosenYear);
-        });
-        choosenMonth.addEventListener('change', function () { // т.к. choosenYear - элемент DOM, то у него есть метод addEventListener , первый параметр - отслеживаемое событие, второй - функция, которая выполнится при срабатывании события 
-          inputMonthToChange(this); // this - контекст вызова. Функция вызывается в контексте объекта choosenYear - нашего select-а , значит в this хранится автоматом именно он 
-        });
-        var reset = document.getElementById('reset');
-        reset.addEventListener('click', function () {
-          location.reload();
-        });
+      var choosenYear = document.getElementById('chooseYear'); //в переменную choosenYear заносим DOM-объект элемент select, который отбираес при помощи id 
+      var choosenMonth = document.getElementById('chooseMonth');
+      choosenYear.addEventListener('change', function () { // т.к. choosenYear - элемент DOM, то у него есть метод addEventListener , первый параметр - отслеживаемое событие, второй - функция, которая выполнится при срабатывании события 
+        inputYearToChange(this); // this - контекст вызова. Функция вызывается в контексте объекта choosenYear - нашего select-а , значит в this хранится автоматом именно он 
+        console.log(choosenYear);
+      });
+      choosenMonth.addEventListener('change', function () { // т.к. choosenYear - элемент DOM, то у него есть метод addEventListener , первый параметр - отслеживаемое событие, второй - функция, которая выполнится при срабатывании события 
+        inputMonthToChange(this); // this - контекст вызова. Функция вызывается в контексте объекта choosenYear - нашего select-а , значит в this хранится автоматом именно он 
+      });
+      var reset = document.getElementById('reset');
+      reset.addEventListener('click', function () {
+        location.reload();
       });
 
       function inputYearToChange(inputYear) {
